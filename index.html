@@ -4,13 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Flappy Bird</title>
-    <link rel="stylesheet" href="css/flappy.css">
+    <link rel="stylesheet" href="flappy.css">
 </head>
 
-<body class="conteudo">
+<body class="flappy">
     <h1>Flappy Bird</h1>
-    <div wm-flappy></div>
-    <script src="js/flappy.js"></script>
+    <div data-flappy>
+        <img class="bird" src="bird.png">
+        <div class="pair-barriers">
+            <div class="barrier">
+                <div class="barrier-body"></div>
+                <div class="barrier-border"></div>
+            </div>
+            <div class="barrier">
+                <div class="barrier-border"></div>
+                <div class="barrier-body"></div>
+            </div>
+        </div>
+        <div class="progress">14</div>
+    </div>
+    <script src="flappy.js"></script>
 </body>
 
 </html>

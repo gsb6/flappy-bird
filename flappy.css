@@ -1,10 +1,10 @@
 @font-face {
-    font-family: 'Oswald';
-    src: url('../fonts/Oswald-Regular.ttf') format('truetype');
+    font-family: 'Pixel';
+    src: url('Pixel.ttf');
 }
 
 * {
-    font-family: 'Oswald', sans-serif;
+    box-sizing: border-box;
 }
 
 html {
@@ -18,39 +18,62 @@ body {
     height: 100%;
 }
 
-.conteudo {
+.flappy {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100%;
 }
 
-.exercicio div {
-    font-size: 3em;
-    border: solid 5px #fff;
-    padding: 20px 40px;
-    margin: 10px;
+[data-flappy] {
+    position: relative;
+    width: 1200px;
+    height: 700px;
+    margin: 15px;
+    background-color: skyblue;
+    border: 5px solid dodgerblue;
+    overflow: hidden;
 }
 
-.exercicio div:nth-of-type(1) {
-    background-color: darkgoldenrod;
+.bird {
+    position: absolute;
+    width: 60px;
+    left: calc(50% - 30px);
+    bottom: 50%;
 }
 
-.exercicio div:nth-of-type(2) {
-    background-color: crimson;
+.pair-barriers {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    top: 0;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.exercicio div:nth-of-type(3) {
-    background-color: darkcyan;
+.barrier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.exercicio div:nth-of-type(4) {
-    background-color: darkorchid;
+.barrier .barrier-border {
+    width: 130px;
+    height: 30px;
+    background: linear-gradient(90deg, #639301, #a5e82e);
+    border: 2px solid black;
 }
 
-.exercicio .destaque {
-    border: solid 10px greenyellow;
-    color: greenyellow;
-    font-weight: bold;
+.barrier .barrier-body {
+    width: 110px;
+    height: 150px;
+    background: linear-gradient(90deg, #639301, #a5e82e);
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
+.progress {
+    position: absolute;
+    right: 10px;
+    font: 70px 'Pixel', cursive;
+}
