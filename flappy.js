@@ -60,7 +60,6 @@ function Barriers(width, height, interspace, gap, score) {
             pair.setX(pair.getX() - displacement);
 
             // quando elemento sair da área do jogo
-            console.log(pair.getX());
             if (pair.getX() < -pair.getWidth()) {
                 pair.setX(pair.getX() + gap * this.pairs.length);
                 pair.randomInterspace();
@@ -110,6 +109,31 @@ function Progress() {
     this.update(0);
 }
 
+function overlapping(elementA, elementB) {
+    const rectA = elementA.getBoundingClientRect();
+    const rectB = elementB.getBoundingClientRect();
+
+    const horizontal = (rectA.left + rectA.width >= rectB.left) && (rectB.left + rectB.width >= rectA.left);
+    const vertical = (rectA.top + rectA.height >= rectB.top) && (rectB.top + rectB.height >= rectA.top);
+
+    return horizontal && vertical;
+}
+
+function collided(bird, barriers) {
+    let collided = false;
+
+    barriers.pairs.forEach(pairBarriers => {
+        if (!collided) {
+            const barrierSup = pairBarriers.superior.element;
+            const barrierInf = pairBarriers.inferior.element;
+
+            collided = overlapping(bird.element, barrierSup) || overlapping(bird.element, barrierInf);
+        }
+    })
+
+    return collided;
+}
+
 function FlappyBird() {
     let points = 0;
 
@@ -135,6 +159,10 @@ function FlappyBird() {
         const timer = setInterval(() => {
             bird.animate();
             barriers.animate();
+
+            if(collided(bird, barriers)) {
+                clearInterval(timer);
+            }
         }, 20)
     }
 }
