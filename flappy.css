@@ -75,5 +75,6 @@ body {
 .progress {
     position: absolute;
     right: 10px;
+    z-index: 99;
     font: 70px 'Pixel', cursive;
 }

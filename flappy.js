@@ -103,14 +103,40 @@ function Bird(gameHeight) {
     this.setY(gameHeight / 2);
 }
 
-const gameArea = document.querySelector('[data-flappy]');
-const bird = new Bird(700);
-const barriers = new Barriers(1200, 700, 200, 400);
+function Progress() {
+    this.element = newElement('span', 'progress');
+    this.update = point => this.element.innerHTML = point;
 
-gameArea.appendChild(bird.element);
-barriers.pairs.forEach(pair => gameArea.appendChild(pair.element));
+    this.update(0);
+}
 
-setInterval(() => {
-    bird.animate();
-    barriers.animate();
-}, 20);
+function FlappyBird() {
+    let points = 0;
+
+    const gameArea = document.querySelector('[data-flappy]');
+    const gameWidth = gameArea.clientWidth;
+    const gameHeight = gameArea.clientHeight;
+
+    const bird = new Bird(gameHeight);
+    const progress = new Progress();
+    const barriers = new Barriers(gameWidth, gameHeight, 200, 400, () => {
+        progress.update(++points);
+    });
+
+    gameArea.appendChild(bird.element);
+    gameArea.appendChild(progress.element);
+
+    barriers.pairs.forEach(pair => {
+        gameArea.appendChild(pair.element)
+    });
+
+    this.start = () => {
+        // loop do jogo
+        const timer = setInterval(() => {
+            bird.animate();
+            barriers.animate();
+        }, 20)
+    }
+}
+
+new FlappyBird().start();
