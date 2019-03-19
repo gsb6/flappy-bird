@@ -75,10 +75,42 @@ function Barriers(width, height, interspace, gap, score) {
     }
 }
 
-const barriers = new Barriers(1200, 700, 200, 400);
-const gameArea = document.querySelector('[data-flappy]');
+function Bird(gameHeight) {
+    let flying = false;
 
+    this.element = newElement('img', 'bird');
+    this.element.src = 'bird.png';
+
+    this.getY = () => parseInt(this.element.style.bottom.split('px')[0]);
+    this.setY = y => this.element.style.bottom = `${y}px`;
+
+    window.onkeydown = () => flying = true;
+    window.onkeyup = () => flying = false;
+
+    this.animate = () => {
+        const newY = this.getY() + (flying ? 8 : -5);
+        const maxHeight = gameHeight - this.element.clientHeight;
+
+        if (newY <= 0) {
+            this.setY(0);
+        } else if (newY >= maxHeight) {
+            this.setY(maxHeight);
+        } else {
+            this.setY(newY);
+        }
+    }
+
+    this.setY(gameHeight / 2);
+}
+
+const gameArea = document.querySelector('[data-flappy]');
+const bird = new Bird(700);
+const barriers = new Barriers(1200, 700, 200, 400);
+
+gameArea.appendChild(bird.element);
 barriers.pairs.forEach(pair => gameArea.appendChild(pair.element));
+
 setInterval(() => {
+    bird.animate();
     barriers.animate();
 }, 20);
